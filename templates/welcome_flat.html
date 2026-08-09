@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="system_title">SPEAR Decision System</title>
+    
+    <!-- Google Fonts: Inter and Georgia (serif) for title/header elements -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Georgia&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+    
+    
+</head>
+<body>
+    <!-- Loading Overlay for API Recalculations -->
+    <div id="loadingOverlay" style="display: none;">
+        <div class="spinner-container">
+            <div class="loading-spinner"></div>
+            <p id="loadingText" data-i18n="recalculating">Recalculating partial results...</p>
+        </div>
+    </div>
+
+    <header class="app-header">
+        <div class="header-logo">
+            <span class="logo-text">SPEAR</span>
+        </div>
+        <div class="header-controls">
+            <!-- Language toggle button -->
+            <button id="langToggle" class="header-control-btn" aria-label="Change Language / Mudar Idioma">
+                <span id="langIcon">🇺🇸</span>
+            </button>
+            <!-- Theme toggle button -->
+            <button id="themeToggle" class="header-control-btn" aria-label="Toggle Theme / Alternar Tema">
+                <span id="themeIcon">☀️</span>
+            </button>
+            <span class="header-version">SE-M1EN-EWT1</span>
+        </div>
+    </header>
+
+    <nav class="sub-nav">
+        <div class="sub-nav-left">
+            
+<!-- No back link on the welcome screen -->
+
+        </div>
+        <div class="sub-nav-right">
+            
+        </div>
+    </nav>
+    
+    <main class="container">
+        
+<div class="welcome-container">
+    <div class="spear-brand-large">
+        <svg class="spear-graphic" width="100%" height="80" viewBox="0 0 400 80" xmlns="http://www.w3.org/2000/svg">
+            <!-- Decorative horizontal spear line behind text -->
+            <line x1="20" y1="40" x2="380" y2="40" stroke="#cccccc" stroke-width="2" />
+            <!-- Spear point -->
+            <polygon points="380,40 370,35 372,40 370,45" fill="#999999" />
+            <!-- Text centered -->
+            <text x="200" y="52" text-anchor="middle" font-family="Georgia, serif" font-size="44" font-weight="bold" fill="#000000" letter-spacing="4">SPEAR</text>
+        </svg>
+    </div>
+
+    <div class="welcome-buttons">
+        {%btnGoToRegister%}
+        {%btnGoToLogin%}
+    </div>
+
+    <div class="warning-container">
+        <p class="warning-text" data-i18n="warning_text">
+            ⚠️ Warning: We advert that this version includes some new features. If any error is found, please send an e-mail to: cdsid.ufpe@gmail.com
+        </p>
+    </div>
+</div>
+
+    </main>
+    
+    <footer class="app-footer">
+        <div class="footer-logos">
+            <!-- inct/insid logo -->
+            <img class="footer-logo-img" src="/static/img/inct_insid.png" alt="INCT / INSID Logo" style="height: 45px; width: auto; max-width: 100%;">
+            <!-- cdsid logo -->
+            <img class="footer-logo-img" src="/static/img/cdsid.png" alt="CDSID Logo" style="height: 45px; width: auto; max-width: 100%;">
+        </div>
+    </footer>
+    
+    <!-- Custom JS -->
+    <script src="/static/js/app.js?v=56005"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+</body>
+</html>

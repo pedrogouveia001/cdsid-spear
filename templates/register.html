@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block back_link %}
+<a href="/" class="back-link">&lt;&lt; Back</a>
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <h2 class="auth-title" data-i18n="register_user">Register user</h2>
+        
+        <div class="auth-form">
+            <div class="form-group">
+                <label for="email" data-i18n="email">E-mail:</label>
+                {%edtEmail%}
+            </div>
+            
+            <div class="form-group">
+                <label for="password" data-i18n="password">Password:</label>
+                {%edtPassword%}
+            </div>
+            
+            <div class="form-group">
+                <label for="confirm_password" data-i18n="confirm_password">Confirm Password:</label>
+                {%edtConfirm%}
+            </div>
+            
+            <div class="auth-actions" style="justify-content: flex-end;">
+                {%btnRegister%}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

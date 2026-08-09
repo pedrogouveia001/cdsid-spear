@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="system_title">SPEAR Decision System</title>
+    
+    <!-- Google Fonts: Inter and Georgia (serif) for title/header elements -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Georgia&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <!-- Loading Overlay for API Recalculations -->
+    <div id="loadingOverlay" style="display: none;">
+        <div class="spinner-container">
+            <div class="loading-spinner"></div>
+            <p id="loadingText" data-i18n="recalculating">Recalculating partial results...</p>
+        </div>
+    </div>
+
+    <header class="app-header">
+        <div class="header-logo">
+            <span class="logo-text">SPEAR</span>
+        </div>
+        <div class="header-controls">
+            <!-- Language toggle button -->
+            <button id="langToggle" class="header-control-btn" aria-label="Change Language / Mudar Idioma">
+                <span id="langIcon">🇺🇸</span>
+            </button>
+            <!-- Theme toggle button -->
+            <button id="themeToggle" class="header-control-btn" aria-label="Toggle Theme / Alternar Tema">
+                <span id="themeIcon">☀️</span>
+            </button>
+            <span class="header-version">SE-M1EN-EWT1</span>
+        </div>
+    </header>
+
+    <nav class="sub-nav">
+        <div class="sub-nav-left">
+            {% block back_link %}
+            <a href="javascript:history.back()" class="back-link" data-i18n="back">&lt;&lt; Back</a>
+            {% endblock %}
+        </div>
+        <div class="sub-nav-right">
+            {% if session.get('user_email') %}
+                <span class="user-info"><span data-i18n="user">User</span>: {{ session.get('user_email') }}</span>
+                <a href="/logout" class="logout-link" data-i18n="logout">Logout</a>
+            {% endif %}
+        </div>
+    </nav>
+    
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+    
+    <footer class="app-footer">
+        <div class="footer-logos">
+            <!-- inct/insid logo -->
+            <img class="footer-logo-img" src="{{ url_for('static', filename='img/inct_insid.png') }}" alt="INCT / INSID Logo" style="height: 45px; width: auto; max-width: 100%;">
+            <!-- cdsid logo -->
+            <img class="footer-logo-img" src="{{ url_for('static', filename='img/cdsid.png') }}" alt="CDSID Logo" style="height: 45px; width: auto; max-width: 100%;">
+        </div>
+    </footer>
+    
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/app.js') }}?v={{ range(1, 100000) | random }}"></script>
+    {% block scripts %}{% endblock %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+</body>
+</html>

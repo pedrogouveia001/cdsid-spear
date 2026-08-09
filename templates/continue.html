@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block back_link %}
+{%btnBack%}
+{% endblock %}
+
+{% block content %}
+<div class="continue-container">
+    <div class="continue-card">
+        <h2 class="continue-title" data-i18n="continue_registered_issue">Continue a registered issue</h2>
+        
+        <div class="problem-list-wrapper">
+            <div id="problemSelect" class="problem-listbox">
+                {%ProblemList%}
+            </div>
+        </div>
+        
+        <div style="display:none;">
+            {%edtSelectedProblemId%}
+            {%btnSelect%}
+        </div>
+        
+        <div class="continue-actions">
+            <span class="wait-note" data-i18n="wait_note">*It can take a few seconds, please wait.</span>
+            <button id="btnSelectProblem" class="btn btn-delphi-action" data-i18n="select">Select</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const btnSelectProblem = document.getElementById('btnSelectProblem');
+    const problemSelect = document.getElementById('problemSelect');
+    let selectedId = '';
+    
+    if (problemSelect) {
+        problemSelect.addEventListener('click', function(e) {
+            const option = e.target.closest('.problem-option');
+            if (option && !option.classList.contains('disabled')) {
+                problemSelect.querySelectorAll('.problem-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                option.classList.add('selected');
+                selectedId = option.getAttribute('data-value');
+            }
+        });
+        
+        problemSelect.addEventListener('dblclick', function(e) {
+            const option = e.target.closest('.problem-option');
+            if (option && !option.classList.contains('disabled')) {
+                problemSelect.querySelectorAll('.problem-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                option.classList.add('selected');
+                selectedId = option.getAttribute('data-value');
+                btnSelectProblem.click();
+            }
+        });
+    }
+    
+    btnSelectProblem.addEventListener('click', function() {
+        if (!selectedId) {
+            const lang = localStorage.getItem('spear_lang') || 'en';
+            alert(lang === 'pt' ? 'Por favor, selecione um problema primeiro.' : 'Please select a problem first.');
+            return;
+        }
+        
+        const edt = document.getElementById('{%edtSelectedProblemId.HTMLName%}');
+        if (edt) edt.value = selectedId;
+        
+        const btn = document.getElementById('{%btnSelect.HTMLName%}');
+        if (btn) btn.click();
+    });
+});
+</script>
+{% endblock %}

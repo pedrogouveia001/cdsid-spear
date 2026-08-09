@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block back_link %}
+<!-- No back link on the welcome screen -->
+{% endblock %}
+
+{% block content %}
+<div class="welcome-container">
+    <div class="spear-brand-large">
+        <svg class="spear-graphic" width="100%" height="80" viewBox="0 0 400 80" xmlns="http://www.w3.org/2000/svg">
+            <!-- Decorative horizontal spear line behind text -->
+            <line x1="20" y1="40" x2="380" y2="40" stroke="#cccccc" stroke-width="2" />
+            <!-- Spear point -->
+            <polygon points="380,40 370,35 372,40 370,45" fill="#999999" />
+            <!-- Text centered -->
+            <text x="200" y="52" text-anchor="middle" font-family="Georgia, serif" font-size="44" font-weight="bold" fill="#000000" letter-spacing="4">SPEAR</text>
+        </svg>
+    </div>
+
+    <div class="welcome-buttons">
+        {%btnGoToRegister%}
+        {%btnGoToLogin%}
+    </div>
+
+    <div class="warning-container">
+        <p class="warning-text" data-i18n="warning_text">
+            ⚠️ Warning: We advert that this version includes some new features. If any error is found, please send an e-mail to: cdsid.ufpe@gmail.com
+        </p>
+    </div>
+</div>
+{% endblock %}

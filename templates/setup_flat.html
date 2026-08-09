@@ -1,0 +1,200 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="system_title">SPEAR Decision System</title>
+    
+    <!-- Google Fonts: Inter and Georgia (serif) for title/header elements -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Georgia&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+    
+    
+</head>
+<body>
+    <!-- Loading Overlay for API Recalculations -->
+    <div id="loadingOverlay" style="display: none;">
+        <div class="spinner-container">
+            <div class="loading-spinner"></div>
+            <p id="loadingText" data-i18n="recalculating">Recalculating partial results...</p>
+        </div>
+    </div>
+
+    <header class="app-header">
+        <div class="header-logo">
+            <span class="logo-text">SPEAR</span>
+        </div>
+        <div class="header-controls">
+            <!-- Language toggle button -->
+            <button id="langToggle" class="header-control-btn" aria-label="Change Language / Mudar Idioma">
+                <span id="langIcon">🇺🇸</span>
+            </button>
+            <!-- Theme toggle button -->
+            <button id="themeToggle" class="header-control-btn" aria-label="Toggle Theme / Alternar Tema">
+                <span id="themeIcon">☀️</span>
+            </button>
+            <span class="header-version">SE-M1EN-EWT1</span>
+        </div>
+    </header>
+
+    <nav class="sub-nav">
+        <div class="sub-nav-left">
+            
+{%btnBack%}
+
+        </div>
+        <div class="sub-nav-right">
+            
+                <span class="user-info"><span data-i18n="user">User</span>: {%lblUserEmail%}</span>
+                <a href="/logout" class="logout-link" data-i18n="logout">Logout</a>
+            
+        </div>
+    </nav>
+    
+    <main class="container">
+        
+{%LoadedProblemDataScript%}
+<script>
+  window.delphiProblemDataId = '{%edtProblemData.HTMLName%}';
+  window.delphiActionTypeId = '{%edtActionType.HTMLName%}';
+  window.delphiTriggerId = '{%btnTrigger.HTMLName%}';
+</script>
+
+<div style="display:none;">
+    {%edtProblemData%}
+    {%edtActionType%}
+    {%btnTrigger%}
+</div>
+
+<div class="setup-container">
+    <input type="hidden" id="loadedProblemId" value="">
+    
+    <div class="setup-row">
+        <!-- Left Panel: Sidebar (Step 1) -->
+        <div class="setup-sidebar">
+            <!-- Problem Identity & Parameters -->
+            <div class="setup-card">
+                <h4 class="panel-title" data-i18n="step1_title">Step 1: Setup Parameters</h4>
+                
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label for="problemName" data-i18n="problem_name">Problem Name:</label>
+                    <input type="text" id="problemName" class="input-delphi" value="New SPEAR Problem" data-i18n-value="New SPEAR Problem">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label for="problemRationality" data-i18n="rationality">Rationality:</label>
+                    <select id="problemRationality" class="select-delphi" style="width: 100%; height: 38px; border-radius: 6px; padding: 0 10px; font-weight: 500;">
+                        <option value="compensatory" data-i18n="compensatory">Compensatory</option>
+                        <option value="non_compensatory" data-i18n="non_compensatory">Non-compensatory</option>
+                    </select>
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label for="numCrit" data-i18n="num_crit">Number of Criteria:</label>
+                    <input type="number" id="numCrit" class="input-delphi" min="1" value="3">
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label for="numAlt" data-i18n="num_alt">Number of Alternatives:</label>
+                    <input type="number" id="numAlt" class="input-delphi" value="4" min="2">
+                </div>
+                
+                <div class="panel-actions" style="margin-top: 16px;">
+                    <button id="btnGenerateGrid" class="btn btn-full-width" data-i18n="update_matrix">Update Matrix Size</button>
+                </div>
+            </div>
+            
+            <!-- Import File Area (Dropzone) -->
+            <div class="setup-card">
+                <h4 class="panel-title" data-i18n="import_file">Or Import Data File</h4>
+                <div id="dropzone" class="upload-dropzone">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="17 8 12 3 7 8" />
+                        <line x1="12" y1="3" x2="12" y2="15" />
+                    </svg>
+                    <div class="dropzone-text" data-i18n="drag_drop">Drag & Drop file here or <span style="text-decoration: underline; font-weight: 600;">browse</span></div>
+                    <div class="dropzone-hint" data-i18n="supports">Supports .csv or .xlsx</div>
+                    <div id="dropzoneFilename" class="dropzone-filename" style="display: none;"></div>
+                </div>
+                <input type="file" id="fileInput" accept=".csv,.xlsx" style="display:none;">
+            </div>
+        </div>
+        
+        <!-- Right Panel: Main Panel (Step 2) -->
+        <div class="setup-main">
+            <div class="matrix-header-row">
+                <h3 class="section-title" data-i18n="step2_title">Step 2: Consequence Matrix</h3>
+                <div class="tooltip-container">
+                    <span class="info-badge" data-i18n="crit_types_info">🛈 Criterion Types Info</span>
+                    <div class="tooltip-content">
+                        <strong data-i18n="crit_types_guide">Criterion Types Guide:</strong>
+                        <ul style="margin: 0; padding: 0 0 0 12px; list-style-type: disc;">
+                            <li style="margin-bottom: 6px;"><strong data-i18n="crit_type_cont_min">Continuous Min</strong>/Max: <span data-i18n="continuous_guide">Represent continuous metrics (e.g. costs or weight).</span></li>
+                            <li style="margin-bottom: 6px;"><strong data-i18n="crit_type_disc_min">Discrete Min</strong>/Max: <span data-i18n="discrete_guide">Represent quality or performance levels. Requires levels.</span></li>
+                            <li style="margin-bottom: 0;"><strong data-i18n="crit_type_int_min">Integer Min</strong>/Max: <span data-i18n="integer_guide">Represent whole count measurements.</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="matrix-table-wrapper">
+                <table id="matrixTable" class="delphi-grid">
+                    <!-- Generated dynamically by JS -->
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bottom row with save, solve buttons -->
+    <div class="setup-footer-row">
+        <button id="btnSaveProblem" class="btn btn-delphi-action" data-i18n="save_problem">Save problem</button>
+        <button id="btnSolve" class="btn btn-delphi-action show-results-btn" data-i18n="show_results">Show Results</button>
+    </div>
+</div>
+
+    </main>
+    
+    <footer class="app-footer">
+        <div class="footer-logos">
+            <!-- inct/insid logo -->
+            <img class="footer-logo-img" src="/static/img/inct_insid.png" alt="INCT / INSID Logo" style="height: 45px; width: auto; max-width: 100%;">
+            <!-- cdsid logo -->
+            <img class="footer-logo-img" src="/static/img/cdsid.png" alt="CDSID Logo" style="height: 45px; width: auto; max-width: 100%;">
+        </div>
+    </footer>
+    
+    <!-- Custom JS -->
+    <script src="/static/js/app.js?v=72662"></script>
+    
+<script>
+  window.saveProblemAction = async function() {
+      const payload = getProblemDataPayload();
+      if (!payload) return null;
+      document.getElementById('{%edtProblemData.HTMLName%}').value = JSON.stringify(payload);
+      document.getElementById('{%edtActionType.HTMLName%}').value = 'save';
+      document.getElementById('{%btnTrigger.HTMLName%}').click();
+      return 'triggered';
+  };
+
+  window.solveProblem = async function() {
+      const payload = getProblemDataPayload();
+      if (!payload) return;
+      document.getElementById('{%edtProblemData.HTMLName%}').value = JSON.stringify(payload);
+      document.getElementById('{%edtActionType.HTMLName%}').value = 'solve';
+      document.getElementById('{%btnTrigger.HTMLName%}').click();
+  };
+</script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+</body>
+</html>

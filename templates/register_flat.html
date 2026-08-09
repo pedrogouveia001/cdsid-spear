@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="system_title">SPEAR Decision System</title>
+    
+    <!-- Google Fonts: Inter and Georgia (serif) for title/header elements -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Georgia&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+    
+    
+</head>
+<body>
+    <!-- Loading Overlay for API Recalculations -->
+    <div id="loadingOverlay" style="display: none;">
+        <div class="spinner-container">
+            <div class="loading-spinner"></div>
+            <p id="loadingText" data-i18n="recalculating">Recalculating partial results...</p>
+        </div>
+    </div>
+
+    <header class="app-header">
+        <div class="header-logo">
+            <span class="logo-text">SPEAR</span>
+        </div>
+        <div class="header-controls">
+            <!-- Language toggle button -->
+            <button id="langToggle" class="header-control-btn" aria-label="Change Language / Mudar Idioma">
+                <span id="langIcon">🇺🇸</span>
+            </button>
+            <!-- Theme toggle button -->
+            <button id="themeToggle" class="header-control-btn" aria-label="Toggle Theme / Alternar Tema">
+                <span id="themeIcon">☀️</span>
+            </button>
+            <span class="header-version">SE-M1EN-EWT1</span>
+        </div>
+    </header>
+
+    <nav class="sub-nav">
+        <div class="sub-nav-left">
+            
+<a href="/" class="back-link">&lt;&lt; Back</a>
+
+        </div>
+        <div class="sub-nav-right">
+            
+        </div>
+    </nav>
+    
+    <main class="container">
+        
+<div class="auth-container">
+    <div class="auth-card">
+        <h2 class="auth-title" data-i18n="register_user">Register user</h2>
+        
+        <div class="auth-form">
+            <div class="form-group">
+                <label for="email" data-i18n="email">E-mail:</label>
+                {%edtEmail%}
+            </div>
+            
+            <div class="form-group">
+                <label for="password" data-i18n="password">Password:</label>
+                {%edtPassword%}
+            </div>
+            
+            <div class="form-group">
+                <label for="confirm_password" data-i18n="confirm_password">Confirm Password:</label>
+                {%edtConfirm%}
+            </div>
+            
+            <div class="auth-actions" style="justify-content: flex-end;">
+                {%btnRegister%}
+            </div>
+        </div>
+    </div>
+</div>
+
+    </main>
+    
+    <footer class="app-footer">
+        <div class="footer-logos">
+            <!-- inct/insid logo -->
+            <img class="footer-logo-img" src="/static/img/inct_insid.png" alt="INCT / INSID Logo" style="height: 45px; width: auto; max-width: 100%;">
+            <!-- cdsid logo -->
+            <img class="footer-logo-img" src="/static/img/cdsid.png" alt="CDSID Logo" style="height: 45px; width: auto; max-width: 100%;">
+        </div>
+    </footer>
+    
+    <!-- Custom JS -->
+    <script src="/static/js/app.js?v=36551"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+</body>
+</html>

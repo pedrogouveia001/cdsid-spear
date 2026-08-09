@@ -1,0 +1,42 @@
+﻿object IWServerController: TIWServerController
+  OldCreateOrder = False
+  AuthBeforeNewSession = False
+  AllowSubFolders = False
+  AppName = 'SPEAR'
+  CacheExpiry = 120
+  ComInitialization = ciNone
+  Compression.Enabled = False
+  Compression.Level = 6
+  Description = 'SPEAR Decision System Server'
+  DebugHTML = False
+  Log = loNone
+  EnableImageToolbar = False
+  ExceptionDisplayMode = smAlert
+  ExecCmd = 'EXEC'
+  HistoryEnabled = False
+  InternalFilesURL = '/'
+
+  PageTransitions = False
+  Port = 8888
+  ReEntryOptions.AutoCreateSession = False
+  RestrictIPs = False
+  RestrictSubnet = False
+  RedirectMsgDelay = 0
+  ServerResizeTimeout = 0
+  SessionTrackingMethod = tmURL
+  ShowResyncWarning = True
+  ShowLoadingAnimation = True
+  SessionTimeout = 60
+  SupportedBrowsers = [brIE, brGecko, brOpera, brSafari, brChrome]
+  SpecialDeviceSupport = [brsIpod, brsIphone]
+  SSLOptions.NonSSLRequest = nsAccept
+  SSLOptions.Port = 0
+  SSLOptions.SSLVersion = sslv3
+  ThreadPoolSize = 64
+  UnknownBrowserAction = ubReject
+  Version = '10.0.0'
+  OnBeforeDispatch = IWServerControllerBaseBeforeDispatch
+  OnNewSession = IWServerControllerBaseNewSession
+  Height = 310
+  Width = 342
+end
